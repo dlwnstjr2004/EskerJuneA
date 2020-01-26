@@ -1,0 +1,24 @@
+##Dependecies for object_detection
+
+sudo apt-get install protobuf-compiler python-pil python-lxml python-tk
+sudo apt-get install libpng-dev libfreetype6-dev
+
+pip3 install --user Cython
+pip3 install --user contextlib2
+pip3 install --user pillow
+pip3 install --user lxml
+pip3 install --user jupyter
+pip3 install --user matplotlib
+
+# From ~/<your PATH>/
+git clone http://github.com/tensorflow/models
+
+cd models/research
+
+protoc object_detection/protos/*.proto --python_out=.
+
+# From ~/<your PATH>/models/research/
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+
+# try
+python3 object_detection/builders/model_builder_test.py
