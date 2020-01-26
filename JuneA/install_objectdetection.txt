@@ -13,6 +13,10 @@ pip3 install --user matplotlib
 # From ~/<your PATH>/
 git clone http://github.com/tensorflow/models
 
+# install cocoapi
+git clone http://github.com/cocodataset/cocoapi.git
+cp cocoapi/PythonAPI/pycocotools /models/research
+
 cd models/research
 
 protoc object_detection/protos/*.proto --python_out=.
@@ -22,3 +26,6 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
 # try
 python3 object_detection/builders/model_builder_test.py
+
+# objectdetection_tutorial on jupyter notebook 
+# 
