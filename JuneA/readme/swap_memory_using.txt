@@ -1,3 +1,6 @@
 $ sysctl vm.swappiness 
 # swap memory 의 비중? 사용량?
 # 기본은 60
+$ sudo vim /etc/sysctl.conf
+# 가장 밑에 $ vm.swappiness = 100 <- 새로 작성 하고 저장
+$ sudo reboot
