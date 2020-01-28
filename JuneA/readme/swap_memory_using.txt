@@ -1,0 +1,3 @@
+$ sysctl vm.swappiness 
+# swap memory 의 비중? 사용량?
+# 기본은 60
