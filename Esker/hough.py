@@ -40,8 +40,8 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap): # 허프 
 
     return line_img
 
-def weighted_img(img, initial_img, α=1, β=1., λ=0.): # 두 이미지 operlap 하기
-    return cv2.addWeighted(initial_img, α, img, β, λ)
+def weighted_img(img, initial_img, a=1, b=1., c=0.): # 두 이미지 operlap 하기
+    return cv2.addWeighted(initial_img, a, img, b, c)
 
 image = cv2.imread('solidWhiteCurve.jpg') # 이미지 읽기
 height, width = image.shape[:2] # 이미지 높이, 너비
