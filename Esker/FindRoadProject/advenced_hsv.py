@@ -62,6 +62,14 @@ cap = cv2.VideoCapture('nevada.mp4') # 동영상 불러오기
 
 while(cap.isOpened()):
 	ret, image = cap.read()
+	
+	hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+	h, s, v = cv2.split(hsv)
+
+	cv2.imshow("h", h)
+	cv2.imshow("s", s)
+	cv2.imshow("v", v)
+
 	height, width = image.shape[:2] # 이미지 높이, 너비
 
 	gray_img = grayscale(image) # 흑백이미지로 변환
@@ -80,11 +88,15 @@ while(cap.isOpened()):
 	slope_degree = (np.arctan2(line_arr[:,1] - line_arr[:,3], line_arr[:,0] - line_arr[:,2]) * 180) / np.pi
 
 	# 수평 기울기 제한
-	line_arr = line_arr[np.abs(slope_degree)<160]
-	slope_degree = slope_degree[np.abs(slope_degree)<160]
+	#line_arr = line_arr[np.abs(slope_degree)<160]
+	#slope_degree = slope_degree[np.abs(slope_degree)<160]
 	# 수직 기울기 제한
-	line_arr = line_arr[np.abs(slope_degree)>95]
-	slope_degree = slope_degree[np.abs(slope_degree)>95]
+	#line_arr = line_arr[np.abs(slope_degree)>95]
+	#slope_degree = slope_degree[np.abs(slope_degree)>95]
+	
+	# on HSV, myeong-do(value) should upper then 125 (on going)
+	# line_arr = line_arr[np.
+
 	# 필터링된 직선 버리기
 	L_lines, R_lines = line_arr[(slope_degree>0),:], line_arr[(slope_degree<0),:]
 	temp = np.zeros((image.shape[0], image.shape[1], 3), dtype=np.uint8)
