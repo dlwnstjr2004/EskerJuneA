@@ -58,7 +58,7 @@ def get_fitline(img, f_lines): # 대표선 구하기
     result = [x1,y1,x2,y2]
     return result
 
-image = cv2.imread('slope_test.jpg') # 이미지 읽기
+image = cv2.imread('test.jpg') # 이미지 읽기
 
 height, width = image.shape[:2] # 이미지 높이, 너비
 
