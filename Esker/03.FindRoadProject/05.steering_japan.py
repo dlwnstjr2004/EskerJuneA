@@ -9,7 +9,7 @@ import random
 import os, sys
 #%matplotlib inline
 
-cap = cv2.VideoCapture('harder.mp4') # you can change this to challenge
+cap = cv2.VideoCapture('Driving_Japan.mp4') # you can change this to challenge
 fit_result, l_fit_result, r_fit_result, L_lane,R_lane = [], [], [], [], []
 
 #Define the codec and create VideoWriter object
@@ -241,7 +241,7 @@ def detect_lanes_img(img):
     height, width = img.shape[:2]
 
     # Set ROI
-    vertices = np.array([[(50,height),(width/2-45, height/2+60), (width/2+45, height/2+60), (width-50,height)]], dtype=np.int32)	
+    vertices = np.array([[(10,height),(width/2-100, height/2+60), (width/2+45, height/2+60), (width-10,height)]], dtype=np.int32)	
     ROI_img = region_of_interest(img, vertices)
     
     # Convert to grayimage
@@ -253,7 +253,7 @@ def detect_lanes_img(img):
     # Apply Canny edge transform
     canny_img = canny(blur_img, 70, 210)
     # to except contours of ROI image
-    vertices2 = np.array([[(50,height),(width/2-45, height/2+60), (width/2+45, height/2+60), (width-50,height)]], dtype=np.int32)
+    vertices2 = np.array([[(10,height),(width/2-100, height/2+60), (width/2+45, height/2+60), (width-10,height)]], dtype=np.int32)
     canny_img = region_of_interest(canny_img, vertices2)
 
     # Perform hough transform
