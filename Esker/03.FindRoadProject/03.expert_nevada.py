@@ -90,7 +90,7 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     #draw_lines(line_arr, lines)
     return lines
 
-def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
+def weighted_img(img, initial_img, a=0.8, b=1., c=0.):
     """
     `img` is the output of the hough_lines(), An image with lines drawn on it.
     Should be a blank image (all black) with lines drawn on it.
@@ -102,7 +102,7 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     initial_img * α + img * β + λ
     NOTE: initial_img and img must be the same shape!
     """
-    return cv2.addWeighted(initial_img, α, img, β, λ)
+    return cv2.addWeighted(initial_img, a, img, b, c)
 
 def Collect_points(lines):
 
