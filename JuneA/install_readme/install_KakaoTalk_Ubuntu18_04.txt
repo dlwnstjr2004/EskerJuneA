@@ -1,0 +1,47 @@
+### Wine 32bit config
+WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
+
+### sub_file copy
+cp ../install_sub_file/Downloads/gulim.ttf ~/Downloads/
+cp ../install_sub_file/Downloads/KakaoTalk_Setup_xp.exe ~/Downloads/
+
+### install start
+cd ~/Downloads/
+wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+chmod +x winetricks
+./winetricks --optout
+### Select the default wineprefix
+### Install a Windows DLL or component
+### gdiplus, riched30, wmp9, msxml6, d3dx9_43
+### Run winecfg => Windows xp로 변경
+### Cancel
+
+### Korean Fonts
+cp gulim.ttf ~/.wine/drive_c/windows/Fonts/
+chmod 644 ~/.wine/drive_c/windows/Fonts/gulim.ttf
+vim ~/.wine/system.reg
+####
+"MS Shell Dlg"="Tahoma"
+"MS Shell Dlg 2"="Tahoma"
+<----------------위의 내용을 아래처럼 변경
+"MS Shell Dlg"="Gulim"
+"MS Shell Dlg 2"="Gulim"
+####
+
+### kakaotalk 설치 모든 빠른실행, 바로가기등등 전부 체크 해제
+wine KakaoTalk_Setup_xp.exe
+sudo reboot
+
+kakaotalk 검색 후 실행해보기
+
+###내가 치는 한글은 깨지고 한글이 보일경우
+vim ~/.local/share/applications/wine/Programs/KakaoTalk/KakaoTalk.desktop
+
+#### 경로 주의. 중간에 LANG="ko_KR.UTF-8" 만 추가 할것.
+Exec=env WINEPREFIX="/home/ubuntu/.wine" wine-stable C:\\\\windows\\\\command\\\\start.exe /Unix /home/ubuntu/.wine/dosdevices/c:/ProgramData/Microsoft/Windows/Start\\ Menu/Programs/KakaoTalk/KakaoTalk.lnk
+<----------------위의 내용을 아래처럼 변경
+Exec=env WINEPREFIX="/home/ubuntu/.wine" LANG="ko_KR.UTF-8" wine-stable C:\\\\windows\\\\command\\\\start.exe /Unix /home/ubuntu/.wine/dosdevices/c:/ProgramData/Microsoft/Windows/Start\\ Menu/Programs/KakaoTalk/KakaoTalk.lnk
+####
+
+sudo reboot
+

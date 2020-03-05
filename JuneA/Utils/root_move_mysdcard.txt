@@ -1,0 +1,40 @@
+# Open Disks on Applications
+# You can find your sdcard and Device Path
+# example ) /dev/sda1 , /dev/mmcblk1p1
+# Click your Partition and Ctrl + Shift + F (Format Partition)
+# Volume Name : ex) SDCard
+# Type : Ext4 not LUKS !!!!!
+
+#Format success
+
+sudo cp -ax / '/media/nvidia/SDCard' 
+####<--- <<YOUR SDCARD PATH>>
+
+# 20 Minutes Later...
+cd /media/nvidia/SDCard/boot/extlinux
+sudo cp extlinux.conf extlinux.conf.original
+
+sudo vim extlinux.conf
+## change boot on sdcard
+------------------------------------------
+TIMEOUT 30
+DEFAULT SDCARD
+
+MENU TITLE L4T boot options
+
+LABEL SDCARD
+      MENU LABEL sdcard
+      LINUX /boot/Image
+      INITRD /boot/initrd
+      APPEND ${cbootargs} root=/dev/mmcblk2p1 rw rootwait
+####<--- root = <YOUR SDCARD Device Path>
+# you can find device path on Disks application
+
+LABEL EMMC
+      MENU LABEL emmc
+      LINUX /boot/Image
+      INITRD /boot/initrd
+      APPEND ${cbootargs} quiet
+------------------------------------------
+
+sudo reboot

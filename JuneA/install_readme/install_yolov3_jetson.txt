@@ -1,0 +1,18 @@
+# git clone
+git clone https://github.com/pjreddie/darknet yolov3
+cd yolov3
+vim Makefile
+## we use GPU =1
+## we use CUDNN =1
+## we use OPENCV =1
+## ARCH= -gencode arch=compute_53,code=[sm_53,compute_53] \    #tx1
+##           -gencode arch=compute_62,code=[sm_62,compute_62]       #tx2
+## ifeq ($(OPENCV), 1) 
+## COMMON+= -DOPENCV
+## CFLAGS+= -DOPENCV
+## LDFLAGS+= `pkg-config --libs opencv4` -lstdc++ -std=c++11
+## COMMON+= `pkg-config --cflags opencv4` 
+## endif
+make -j4
+wget https://pjreddie.com/media/files/yolov3.weights
+./darknet detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights <<your video path>>
