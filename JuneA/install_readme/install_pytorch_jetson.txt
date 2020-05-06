@@ -1,0 +1,25 @@
+sudo apt-get install python-pip -y
+
+pip install -U pip
+pip --version
+
+git clone http://github.com/pytorch/pytorch
+cd pytorch
+git submodule update --init
+
+sudo pip install -U setuptools
+sudo pip install -r requirements.txt
+
+python setup.py build_deps
+sudo python setup.py develop
+
+-------------------------------------------------------------------------------------
+wget https://nvidia.box.com/shared/static/mmu3xb3sp4o8qg9tji90kkxl1eijjfc6.whl -O torch-0.4.1-cp35-cp35m-linux_aarch64.whl
+
+pip3 install numpy torch-0.4.1-cp35-cp35m-linux_aarch64.whl
+
+sudo apt-get install libjpeg-dev zlib1g-dev -y
+
+git clone -b v0.2.1 https://github.com/pytorch/vision torchvision
+cd torchvision
+sudo python3 setup.py install
