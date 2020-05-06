@@ -97,7 +97,7 @@ def test_simple(args):
     if(args.video_path == '0' or args.video_path == '1'):
         vid = cv2.VideoCapture(int(args.video_path))
         print("camera open")
-        output_directory = "./assets/data/"
+        output_directory = "./assets"
         if vid.isOpened() == False: #카메라 생성 확인
             print("camera can not open")
             exit()
@@ -155,10 +155,16 @@ def test_simple(args):
 
             imcv = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)            
             info = "time:" + str(round(1000*exec_time, 2)) + " ms, FPS: " + str(round((1000/(1000*exec_time)),1))
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            #resize window
+            frame = cv2.resize(frame, dsize=(640,480), interpolation=cv2.INTER_AREA)
+            imcv = cv2.resize(imcv, dsize=(640,480), interpolation=cv2.INTER_AREA)
             cv2.putText(imcv, text=info, org=(50, 70),
                 fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=1, color=(255, 0, 0), thickness=2)
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            #show result
             cv2.imshow("input", frame)
             cv2.imshow("result",imcv)
             if cv2.waitKey(10) & 0xFF == ord('q'): break
