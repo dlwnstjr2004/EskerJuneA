@@ -1,8 +1,0 @@
-네바다의 경우, ROI설정을
-
- vertices = np.array([[(150,height-10),(width/2-40, height/2+200), (width/2+40, height/2+200), (width-150,height-10)]], dtype=np.int32)
-
-일반적으로 도로가 화면의 40%~50% 정도를 차지하는 영상에서는
-vertices = np.array([[(50,height),(width/2-45, height/2+60), (width/2+45, height/2+60), (width-50,height)]], dtype=np.int32)
-
-정도로 맞춰주면 잘 된다.
