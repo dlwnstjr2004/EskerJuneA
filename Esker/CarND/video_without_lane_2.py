@@ -68,7 +68,7 @@ class Car:
         if (self.has_position):
             pos = np.array((bbox[0]/2+bbox[2]/2, bbox[3])).reshape(1, 1, -1)
             dst = cv2.perspectiveTransform(pos, self.transform_matrix).reshape(-1, 1)
-            print(dst)
+            #print(dst)
             #print(np.array((self.wraped_size[1]-dst[1])/self.pix_per_meter[1]))
             return np.array((self.warped_size[1]-dst[1])/self.pix_per_meter[1])
         else:
