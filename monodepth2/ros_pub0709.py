@@ -190,7 +190,7 @@ def test_simple(args):
             global publisher
             global publisher2
             send_width = imcv_max-imcv_min
-            send_center = (imcv_max+imcv_min)/2
+            send_center = int((imcv_max+imcv_min)/2)
 
             publisher.publish(str(send_width)) #type what you what to publish
             publisher2.publish(str(send_center)) 

@@ -14,7 +14,7 @@ int tmp_angle = 90;
 int angle = 0;
 int newAngle = 0;
 int newSpeed = 0;
-const int MaxChars = 4;
+const int MaxChars = 2;
 char strValue[MaxChars+1];
 int idx = 0;
 int value = 0;
@@ -54,34 +54,37 @@ void serialEvent()
   while(Serial.available())
   {
     char ch = Serial.read();
-    Serial.write(ch); // one letter at once,
-    if(idx < MaxChars && isDigit(ch)) {
+    //Serial.write(ch); // one letter at once,
+    if(idx < MaxChars && isDigit(ch) && (ch != '-') && (ch != '.') && (ch != ' ')) {
       strValue[idx++] = ch;
-      Serial.println("number detected"); // ch is number
+      //Serial.println("number detected"); // ch is number
       idx_check = idx;
     } else {
       strValue[idx++] = ch; //마지막을 의미하는 문자 s나 a가 들어있을 것.
       idx_check = idx;
-      Serial.print("strValue Test: ");
-      Serial.print(strValue[0]);
-      Serial.print(strValue[1]);
-      Serial.print(strValue[2]);
-      Serial.print(strValue[3]);
-      Serial.println(strValue[4]);
-
-      Serial.print("newAngle Test:");
       
-      if(strValue[idx_check-1]=="a"){// accelerate이라면
-        newSpeed = strValue[0]-48
-        if ((newSpeed >= 0)&&(newSpeed <= 6)){ motor_level(newSpeed); }
-        else Serial.print("ErrorCode:0002 speed variant is strange!");
+      //Serial.print("strValue Test: ");
+      //Serial.print(strValue[0]);
+      //Serial.println(strValue[1]);
+      //Serial.print(strValue[2]);
+      //Serial.print(strValue[3]);
+      //Serial.print(strValue[4]);
+      
+      if(strValue[idx_check-1]=='a'){// accelerate이라면
+        newSpeed = strValue[0]-48;
+        if ((newSpeed >= 0)&&(newSpeed <= 6)){ 
+          motor_level(newSpeed);
+          Serial.print("Speed level Test : ");
+          Serial.println(newSpeed);
+          }
+        else Serial.println("ErrorCode:0002 speed variant is strange!");
       }
-      else if(strValue[idx_check-1]=="s"){ //steering이라면
+      else if(strValue[idx_check-1]=='s'){ //steering이라면
         idx_check--;
-        if(idx_check == 4){
+        /*if(idx_check == 4){
           newAngle = (strValue[0]-48)*pow(10,(idx_check-1)) + (strValue[1]-48)*pow(10,(idx_check-2)) + (strValue[3]-48)*pow(10,(idx_check-3)) + (strValue[4]-48)*pow(10,(idx_check-4));
         }
-        else if(idx_check == 3){
+        else*/ if(idx_check == 3){
           newAngle = (strValue[0]-48)*pow(10,(idx_check-1)) + (strValue[1]-48)*pow(10,(idx_check-2)) + (strValue[2]-48)*pow(10,(idx_check-3));
         }
         else if(idx_check == 2){
@@ -93,12 +96,17 @@ void serialEvent()
         else{
           newAngle = 0;
         }
-
+        Serial.print("0 - right 1 - left : ");
+        Serial.println(newAngle);
+        steering(newAngle);
+        /*
         newAngle = newAngle/5+26; // 5pixel당 1degree 단순 선형적으로 계산, 320일 때 90degree : no steering
         analogWrite(SteeringPin, map(newAngle, 0, 180, 205, 409));
+        Serial.print("Steering Angle Test : ");
         Serial.println(map(newAngle, 0, 180, 205, 409));
+        */
       }
-      else{ Serial.print("ErrorCode:0001 no flags"); }
+      else{ Serial.println("ErrorCode:0001 no flags"); }
       idx_check = 0;
       idx = 0;
     }
@@ -151,6 +159,17 @@ void motor_level(int value)
 {
   int power = 307+value;
   analogWrite(ForwardPin, power);
+}
+
+void steering(int value)
+{
+  if (value == 0){
+    analogWrite(SteeringPin, 80); //right    
+  }
+  else if (value == 1){
+    analogWrite(SteeringPin, 100); //left
+  }
+  else {}
 }
 
 

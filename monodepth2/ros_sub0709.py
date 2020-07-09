@@ -22,41 +22,44 @@ def laser_listener():
 
 def call1(data):
     #print(data.data)
-    pixelsize = int(data.data)
-    
+    pixelsize = float(data.data)
+    distance = pixelsize
     #ser.write(distance.encode())
     #print(pixelsize)
     if (pixelsize >= 400):
-        ser.write("0".encode())
+        ser.write('0'.encode())
         print("stop")
     elif ( (distance < 400) and (distance >= 333) ):
-        ser.write("1".encode())
+        ser.write('1'.encode())
         print("speed level 1")
     elif ( (distance < 333) and (distance >= 267) ):
-        ser.write("2".encode())
+        ser.write('2'.encode())
         print("speed level 2")
     elif ( (distance < 267) and (distance >= 200) ):
-        ser.write("3".encode())
+        ser.write('3'.encode())
         print("speed level 3")
     elif ( (distance < 200) and (distance >= 133) ):
-        ser.write("4".encode())
+        ser.write('4'.encode())
         print("speed level 4")
     elif ( (distance < 133) and (distance >= 67) ):
-        ser.write("5".encode())
+        ser.write('5'.encode())
         print("speed level 5")
     elif (distance < 67):
-        ser.write("6".encode())
+        ser.write('6'.encode())
         print("fullspeed")
     else:
         print("somethings bad happen")
-    ser.write("a".encode()) #a for accelerate
-        
+    ser.write('a'.encode())
+
 def call2(data):
     defalut_middle = 320 #we use 640x320 image so x(row) center is 320
-    center = int(data.data)
-    
-    ser.write(str(defalut_middle-center).encode())
-    ser.write("s".encode()) #s for steering
+    center = float(data.data)
+    if (defalut_middle-center>0):
+        ser.write('0'.encode())
+    else :
+        ser.write('1'.encode())
+    ser.write('s'.encode())
+    #ser.write(str(defalut_middle-center).encode())
     '''
     if (defalut_middle>center):
         ser.write("r")
